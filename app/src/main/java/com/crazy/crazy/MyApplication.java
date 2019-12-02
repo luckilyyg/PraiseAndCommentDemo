@@ -26,6 +26,9 @@ public class MyApplication extends Application {
     public static Context getAppContext() {
         return baseApplication;
     }
+    public static Context getInstance() {
+        return baseApplication;
+    }
     public static Resources getAppResources() {
         return baseApplication.getResources();
     }

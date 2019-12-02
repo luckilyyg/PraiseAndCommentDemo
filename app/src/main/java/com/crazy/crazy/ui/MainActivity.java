@@ -1,6 +1,7 @@
 package com.crazy.crazy.ui;
 
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.crazy.crazy.AppCache;
 import com.crazy.crazy.R;
 import com.crazy.crazy.adapter.CircleAdapter;
@@ -32,6 +34,7 @@ import com.crazy.crazy.util.ToastUitl;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnClickListenerDoFavort, OnClickListenerUpdateEditTextBody {
+    private static final String TAG = "MainActivity";
     private Toolbar toolbar;
     private RecyclerView irc;
     private LinearLayout mEditTextBodyLl;//底部评论框
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListenerDo
     private int mCurrentKeyboardH;
     private int mSelectCircleItemH;
     private int mSelectCommentItemOffset;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,16 +82,46 @@ public class MainActivity extends AppCompatActivity implements OnClickListenerDo
                 return false;
             }
         });
+
+
+        irc.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE://滚动停止
+                        Log.e(TAG, "SCROLL_STATE_IDLE: ");
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING://手指 拖动
+                        Log.e(TAG, "SCROLL_STATE_DRAGGING: ");
+                        break;
+                    case RecyclerView.SCROLL_STATE_SETTLING://惯性滚动
+                        Log.e(TAG, "SCROLL_STATE_SETTLING: ");
+                        break;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.e(TAG, "dx: " + dx);
+                int scrollY = 0;
+                scrollY += dy;
+                Log.e(TAG, "scrollY: " + scrollY);
+            }
+        });
     }
 
     private void initData() {
         adapter = new CircleAdapter();
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         adapter.setCallBackFavortListener(this);
         adapter.setCallBackUpdateEditTextBody(this);
         adapter.setNewData(Constants.getCircleItem());
         irc.setAdapter(adapter);
         setViewTreeObserver();
     }
+
     /**
      * 监听recyclerview滑动
      */
@@ -171,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListenerDo
             }
         });
     }
+
     public void update2AddComment(String content, CommentConfig addItem) {
         if (addItem != null) {
             adapter.getData().get(addItem.circlePosition).getReplys().add(new CommentItem(AppCache.getInstance().getUserId(), AppCache.getInstance().getUserName(), addItem.getName(), addItem.getId(), content));
@@ -179,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListenerDo
         //清空评论文本
         mEdt.setText("");
     }
+
     @Override
     public void update2AddFavorite(int circlePosition, FavortItem addItem) {
         Log.e("test", "update2AddFavorite: ");
@@ -256,6 +292,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListenerDo
         }
 
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {

@@ -83,4 +83,8 @@
     <color name="alpha_85_black">#D9000000</color>
     <color name="alpha_90_black">#E6000000</color>
     <color name="alpha_95_black">#F2000000</color>
+    <color name="mainColor">#d43433</color>
+    <color name="grayColor">#B3B3B3</color>
+    <color name="bg">#F0F0F0</color>
+    <color name="txt_color">#48495F</color>
 </resources>

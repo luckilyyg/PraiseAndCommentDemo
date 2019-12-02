@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/item_selected_btn" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_weight="1"
+        android:maxLines="1"
+        android:text="aaaaaaaaaaaa"
+        android:textColor="@android:color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/sub_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="下级：20"
+        android:textColor="#C7C7CD"
+        android:textSize="@dimen/sp_12" />
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/item_drop_down_btn" />
+</LinearLayout>
